@@ -1,20 +1,16 @@
 
 public class binProgram {
-
 	private Node root;
-	
 	private class Node
 	{
-		private int value;
-		private Node left,right;
-		private int N;
+		Node left;
+		Node right;
+		int value;
 		
-		public Node(int value,int N)
+		public Node(int value)
 		{
 			this.value = value;
-			this.N = N;
-		}	
-		
+		}
 		
 		public int getValue()
 		{
@@ -23,62 +19,176 @@ public class binProgram {
 		
 	}
 	
-	private void put(int value)
+	public void insert(int value)
 	{
-		root = put(root,value);
+		root = insert(root,value);
 	}
 	
-	private Node put(Node x,int value)
+	public Node insert(Node x,int value)
 	{
-		if(x==null) { return new Node(value,1);}
-		if(value<x.getValue()) { x.left = put(x.left,value);}
-		else if(value>=x.getValue()){ x.right = put(x.right,value);}
+		if(x==null){return new Node(value);}
+		if(value<x.getValue()){x.left = insert(x.left,value);}
+		else if(value>=x.getValue()){x.right = insert(x.right,value);}
 		return x;
 	}
 	
-	private Node min()
+	public Node min()
 	{
 		return min(root);
 	}
 	
-	private Node min(Node x)
+	public Node min(Node x)
 	{
-		if(x==null) {return null;}
+		if(x==null){return null;}
 		while(x.left!=null)
 		{
-			x = x.left;
+			x= x.left;
 		}
 		return x;
 	}
 	
-	private Node max()
+	public Node max()
 	{
-		return max(root);
+		return max(root);	
 	}
 	
-	private Node max(Node x)
+	public Node max(Node x)
 	{
-		if(x==null)
-		{
-			return null;
-		}
+		if(x==null){return null;}
 		while(x.right!=null)
 		{
-			x=x.right;
+		 x= x.right;	
 		}
 		return x;
+		
+	}
+	
+	public binProgram()
+	{
+		root = null;
+	}
+	
+	public void inOrder()
+	{
+		inOrder(root);
+	}
+	
+	public void inOrder(Node x)
+	{
+	 	if(x==null)
+	 	{
+	 		System.out.println("None to display");
+	 	}
+	 	else
+	 	{
+	 		if(x.left!=null) { inOrder(x.left);}
+	 		System.out.println(x.getValue());
+	 		if(x.right!=null){ inOrder(x.right);}
+	 	}
+	 	
+	}
+	
+	public void preOrder()
+	{
+		preOrder(root);
+	}
+	
+	public void preOrder(Node x)
+	{
+		if(x==null) {System.out.println("None to display");}
+		else
+		{
+			System.out.println(x.getValue());
+			if(x.left!=null){ preOrder(x.left); }
+			if(x.right!=null){ preOrder(x.right); }
+		}
+	}
+	
+	public void postOrder()
+	{
+		postOrder(root);
+	}
+	
+	public void postOrder(Node x)
+	{
+		if(x==null){ System.out.println("None to print");}
+		else
+		{
+			if(x.left!=null){postOrder(x.left);}
+			if(x.right!=null){postOrder(x.right);}
+			System.out.println(x.getValue());
+		}
+	}
+	
+	public int height()
+	{
+		return height(root);
+	}
+	
+	public int height(Node x)
+	{
+		int height = 0 ; 
+		if(x==null){return 0;}
+		int left_height=0;
+		int right_height=0;
+		if(x.left!=null)
+		{
+			left_height = height(x.left);
+		}
+		if(x.right!=null)
+		{
+			right_height = height(x.right);
+		}
+		if(left_height>right_height)
+		{
+			return left_height+1;
+		}
+		else
+		{
+			 return right_height+1;
+		}
+				
 	}
 	public static void main(String args[])
 	{
-		binProgram one = new binProgram();
-		System.out.println("Hi");
-		one.put(3);
-		one.put(2);
-		one.put(1);
-		Node minNode = one.min();
-		Node maxNode = one.max();
-		System.out.println(minNode.getValue());
-		System.out.println(maxNode.getValue());
+		try
+		{
+		binProgram init = new binProgram();
+		init.insert(5);
+		System.out.println("Entering 5");
+		init.insert(4);
+		System.out.println("Entering 4");
+		init.insert(6);
+		System.out.println("Entering 6");
+		init.insert(7);
+		System.out.println("Entering 7");
+		init.insert(8);
+		System.out.println("Entering 8");
+		init.insert(9);
+		System.out.println("Entering 9");
+		init.insert(10);
+		System.out.println("Entering 10");
 		
+		Node minNode = init.min();
+		Node maxNode = init.max();
+		System.out.println("\n\\/ MINVALUE ");
+		System.out.println(minNode.getValue());
+		System.out.println("\n\\/ MAXVALUE ");
+		System.out.println(maxNode.getValue());
+		System.out.println("\n\\/ INORDER ");
+		init.inOrder();
+		System.out.println("\n\\/ PREORDER" );
+		init.preOrder();
+		System.out.println("\n\\/ POSTORDER" );
+		init.postOrder();
+		System.out.println("\n\\/ HEIGHT" );
+		System.out.println(init.height());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
+	
+	
 }
